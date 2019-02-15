@@ -7,6 +7,6 @@
 <body>
 
 	<h2>Bem vindo</h2>
-	<a href="cadastroUsuario.jsp">Cadastrar usuarios</a>
+	<a href="saveUser">Cadastrar usuarios</a>
 </body>
 </html>

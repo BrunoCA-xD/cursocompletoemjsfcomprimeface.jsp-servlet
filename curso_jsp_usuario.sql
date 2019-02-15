@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `curso_jsp` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `curso_jsp`;
 -- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: curso_jsp
@@ -23,11 +25,14 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `login` varchar(255) DEFAULT NULL,
   `senha` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+  `nome` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `login_UNIQUE` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -39,7 +44,6 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+-- Dump completed on 2019-02-15 11:42:01
 
-insert into usuario values(null,'admin','admin');
-
--- Dump completed on 2019-02-13 22:27:03
+insert into usuario values(null,'admin','admin','adm');

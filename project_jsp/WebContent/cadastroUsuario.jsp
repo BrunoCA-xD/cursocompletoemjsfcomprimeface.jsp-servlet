@@ -22,14 +22,14 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form action="saveUser" method="post"
+			<form action="saveUser" id="frmUser" method="post"
 				class="contact100-form validate-form">
-				<span class="contact100-form-title">Usuário </span>
-				<div style="display:none;"
-					class="wrap-input100 validate-input bg1"
-					data-validate="Please Type Your Name">
-					<span>Codigo:</span> <input type="text" name="id"
-						value="${user.id}" readonly="readonly" />
+				<span class="contact100-form-title">Usuário </span> <input
+					type="hidden" name="id" value="${user.id}" readonly="readonly" />
+				<div class="wrap-input100 validate-input bg1">
+					<label for="nome" class="label-input100">Nome: </label> <input
+						class="input100" type="text" id="nome" name="nome"
+						value="${user.nome}" placeholder="Please Type Your Name" />
 				</div>
 				<div class="wrap-input100 validate-input bg1">
 					<label for="login" class="label-input100">Login*: </label> <input
@@ -45,11 +45,22 @@
 
 
 				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn">
-						<span> Salvar &nbsp;&nbsp;<i
-							class="fas fa-long-arrow-alt-right"></i>
-						</span>
-					</button>
+					<div
+						<c:out value='${acao.equals("edit") ? "class=col-sm-6" :"class=col-sm-12" }'/>>
+						<button class="contact100-form-btn" style="display: inline;">
+							<span> Salvar &nbsp;&nbsp;<i
+								class="fas fa-long-arrow-alt-right"></i>
+							</span>
+						</button>
+					</div>
+					<c:if test="${acao.equals('edit') }">
+						<div class="col-sm-6">
+							<button class="contact100-form-btn" style="display: inline;"
+								onclick="document.getElementById('frmUser').action = 'saveUser?acao=reset';">
+								<span> Cancelar </span>
+							</button>
+						</div>
+					</c:if>
 				</div>
 			</form>
 			<br /> <br /> <span class="contact100-form-title"> Listagem
@@ -59,17 +70,22 @@
 					<tr>
 						<th>Excluir</th>
 						<th>Editar</th>
-						<th>Usuario</th>
-						<th>Senha</th>
+						<th>Nome</th>
+						<th>Usuário</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${usuarios}" var="user">
+
 						<tr>
-							<td width="2"><a href="saveUser?acao=delete&usuario=${user.id}"><i class="far fa-trash-alt"></i></a></td>
-							<td width="2"><a href="saveUser?acao=edit&usuario=${user.id}"><i class="far fa-edit"></i></a></td>
+							<td width="2"><a
+								href="saveUser?acao=delete&usuario=${user.id}"><i
+									class="far fa-trash-alt"></i></a></td>
+							<td width="2"><a
+								href="saveUser?acao=edit&usuario=${user.id}"><i
+									class="far fa-edit"></i></a></td>
+							<td><c:out value="${user.nome}"></c:out></td>
 							<td><c:out value="${user.login}"></c:out></td>
-							<td><c:out value="${user.senha}"></c:out></td>
 						</tr>
 					</c:forEach>
 				</tbody>

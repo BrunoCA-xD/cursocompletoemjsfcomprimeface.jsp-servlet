@@ -5,19 +5,31 @@ public class UserBean {
 	private Long id;
 	private String login;
 	private String senha;
+	private String nome;
 
 	public UserBean() {
 	}
-	public UserBean(Long id,String login, String senha) {
+
+	public UserBean(Long id, String login, String senha) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.senha = senha;
 	}
-	public UserBean(String login, String senha) {
+
+	public UserBean(Long id, String login, String senha, String nome) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.senha = senha;
+		this.nome = nome;
+	}
+
+	public UserBean(String login, String senha,String nome) {
 		super();
 		this.login = login;
 		this.senha = senha;
+		this.nome = nome;
 	}
 
 	public Long getId() {
@@ -44,4 +56,11 @@ public class UserBean {
 		this.senha = senha;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 }

@@ -26,21 +26,20 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String action = request.getParameter("acao");
+			String action = request.getParameter("acao") != null ? request.getParameter("acao") : "";
 			String user = request.getParameter("usuario");
 
 			if (action.equals("delete")) {
 				daoUser.delete(user);
-				RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
-				request.setAttribute("usuarios", daoUser.listAll());
-				view.forward(request, response);
-			}else if(action.equals("edit")){
-				UserBean userBean = daoUser.findByLogin(user);
-				RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
-				request.setAttribute("usuarios", daoUser.listAll());
+
+			} else if (action.equals("edit")) {
+				UserBean userBean = daoUser.findById(user);
 				request.setAttribute("user", userBean);
-				view.forward(request, response);
 			}
+			RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
+			request.setAttribute("usuarios", daoUser.listAll());
+			request.setAttribute("acao", action);
+			view.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,17 +49,21 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String id = request.getParameter("id");
-		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
+		String action = request.getParameter("acao") != null ? request.getParameter("acao") : "";
+		if (!action.equalsIgnoreCase("reset")) {
+			String id = request.getParameter("id");
+			String login = request.getParameter("login");
+			String senha = request.getParameter("senha");
+			String nome = request.getParameter("nome");
 
-		UserBean user = new UserBean(login, senha);
-		
-		if(id == null || id.isEmpty()) {
-			daoUser.save(user);			
-		}else {
-			user.setId(Long.valueOf(id));
-			daoUser.update(user);
+			UserBean user = new UserBean(login, senha, nome);
+
+			if (id == null || id.isEmpty()) {
+				daoUser.save(user);
+			} else {
+				user.setId(Long.valueOf(id));
+				daoUser.update(user);
+			}
 		}
 
 		try {
