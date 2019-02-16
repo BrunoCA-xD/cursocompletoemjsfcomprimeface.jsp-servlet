@@ -49,28 +49,40 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String action = request.getParameter("acao") != null ? request.getParameter("acao") : "";
-		if (!action.equalsIgnoreCase("reset")) {
-			String id = request.getParameter("id");
-			String login = request.getParameter("login");
-			String senha = request.getParameter("senha");
-			String nome = request.getParameter("nome");
-
-			UserBean user = new UserBean(login, senha, nome);
-
-			if (id == null || id.isEmpty()) {
-				daoUser.save(user);
-			} else {
-				user.setId(Long.valueOf(id));
-				daoUser.update(user);
-			}
-		}
-
 		try {
+			String action = request.getParameter("acao") != null ? request.getParameter("acao") : "";
+			if (!action.equalsIgnoreCase("reset")) {
+				String id = request.getParameter("id");
+				String login = request.getParameter("login");
+				String senha = request.getParameter("senha");
+				String nome = request.getParameter("nome");
+				String fone = request.getParameter("fone");
+				UserBean user = new UserBean(login, senha, nome, fone);
+				if (daoUser.isLoginValid(login, id)) {
+					if (daoUser.isPasswordValid(senha, id)) {
+						if (id == null || id.isEmpty()) {
+							daoUser.save(user);
+							request.setAttribute("successMsg", "Usuário cadastrado com sucesso!");
+						} else {
+							user.setId(Long.valueOf(id));
+							daoUser.update(user);
+							request.setAttribute("successMsg", "Usuário atualizado com sucesso!");
+						}
+					} else {
+						request.setAttribute("user", user);
+						request.setAttribute("errorMsg", "Senha já usada em outro usuário");
+					}
+				} else {
+					request.setAttribute("user", user);
+					request.setAttribute("errorMsg", "Login já usado em outro usuário");
+				}
+			}
 			RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
 			request.setAttribute("usuarios", daoUser.listAll());
 			view.forward(request, response);
-		} catch (SQLException e) {
+		} catch (
+
+		SQLException e) {
 
 			e.printStackTrace();
 		}

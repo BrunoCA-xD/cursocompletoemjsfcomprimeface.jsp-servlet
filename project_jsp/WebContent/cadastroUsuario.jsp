@@ -20,6 +20,28 @@
 </head>
 <body>
 
+	<!-- Position it -->
+	<div style="position: fixed; bottom: 5px; right: 0; z-index: 1293914812">
+
+		<!-- Then put toasts within -->
+
+		<div class="toast" role="alert" aria-live="assertive"
+			aria-atomic="true" data-autohide="false">
+			<div class="toast-header">
+				${errorMsg !=null ? '<i class="fas fa-exclamation-circle rounded mr-1" style="color:red;"></i>' 
+				: successMsg !=null ? '<i class="fas fa-check-circle rounded mr-1" style="color:green;"></i>' : ''}
+				<strong class="mr-auto">Meu sistema</strong>
+				<button type="button" class="ml-1 mb-1 close" data-dismiss="toast"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body">${errorMsg !=null ? errorMsg : "" }
+				${successMsg !=null ? successMsg : "" }</div>
+		</div>
+	</div>
+
+
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form action="saveUser" id="frmUser" method="post"
@@ -42,7 +64,12 @@
 						class="input100" type="password" id="senha" name="senha"
 						value="${user.senha}" placeholder="Please Type Your password" />
 				</div>
-
+				<div class="wrap-input100 validate-input bg1">
+					<label for="fone" class="label-input100">Fone*: </label> <input
+						class="input100" type="text" id="fone" name="fone"
+						required="required" value="${user.fone}"
+						placeholder="Please Type Your phone" />
+				</div>
 
 				<div class="container-contact100-form-btn">
 					<div
@@ -72,6 +99,7 @@
 						<th>Editar</th>
 						<th>Nome</th>
 						<th>Usuário</th>
+						<th>Fone</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -86,6 +114,7 @@
 									class="far fa-edit"></i></a></td>
 							<td><c:out value="${user.nome}"></c:out></td>
 							<td><c:out value="${user.login}"></c:out></td>
+							<td><c:out value="${user.fone}"></c:out></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -94,7 +123,6 @@
 		</div>
 
 	</div>
-
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -107,5 +135,10 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+	<c:if test="${errorMsg !=null || successMsg !=null}">
+		<script type="text/javascript">
+			$('.toast').toast('show');
+		</script>
+	</c:if>
 </body>
 </html>
