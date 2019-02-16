@@ -19,11 +19,10 @@ public class ProductBean {
 		this.valor = valor;
 	}
 
-	public ProductBean(String nome, Double quantidade, Double valor) {
+	public ProductBean(String nome) {
 		super();
 		this.nome = nome;
-		this.quantidade = quantidade;
-		this.valor = valor;
+
 	}
 
 	public Long getId() {

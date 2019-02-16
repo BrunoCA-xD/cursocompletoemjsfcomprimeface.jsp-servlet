@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,6 +51,8 @@ public class UserServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
+
 			String action = request.getParameter("acao") != null ? request.getParameter("acao") : "";
 			if (!action.equalsIgnoreCase("reset")) {
 				String id = request.getParameter("id");
@@ -58,32 +61,47 @@ public class UserServlet extends HttpServlet {
 				String nome = request.getParameter("nome");
 				String fone = request.getParameter("fone");
 				UserBean user = new UserBean(login, senha, nome, fone);
-				if (daoUser.isLoginValid(login, id)) {
-					if (daoUser.isPasswordValid(senha, id)) {
-						if (id == null || id.isEmpty()) {
-							daoUser.save(user);
-							request.setAttribute("successMsg", "Usuário cadastrado com sucesso!");
-						} else {
-							user.setId(Long.valueOf(id));
-							daoUser.update(user);
-							request.setAttribute("successMsg", "Usuário atualizado com sucesso!");
-						}
-					} else {
-						request.setAttribute("user", user);
-						request.setAttribute("errorMsg", "Senha já usada em outro usuário");
-					}
-				} else {
+
+				// trabalho de classe service, ou bussiness object (BO)
+				String errorMsg = null;
+				if (login == null || login.trim().isEmpty())
+					errorMsg = "Informar um login é obrigatório";
+				if (senha == null || senha.trim().isEmpty()) {
+					errorMsg = errorMsg == null ? "" : errorMsg + " <br/> ";
+					errorMsg += "Informar uma senha é obrigatório";
+				}
+				boolean loginValid = false, passwordValid = false;
+				if (errorMsg == null) {
+					loginValid = daoUser.isLoginValid(login, id);
+					passwordValid = daoUser.isPasswordValid(senha, id);
+					if (!loginValid)
+						errorMsg = "Login já usado em outro usuário";
+					else if (!passwordValid)
+						errorMsg = "Senha já usada em outro usuário";
+				}
+				if (!loginValid || !passwordValid) {
+					request.setAttribute("usuarios", daoUser.listAll());					
+					request.setAttribute("errorMsg", errorMsg);
 					request.setAttribute("user", user);
-					request.setAttribute("errorMsg", "Login já usado em outro usuário");
+					view.forward(request, response);
+					return;
+				}
+
+				if (id == null || id.isEmpty()) {
+					daoUser.save(user);
+					request.setAttribute("successMsg", "Usuário cadastrado com sucesso!");
+				} else {
+					user.setId(Long.valueOf(id));
+					daoUser.update(user);
+					request.setAttribute("successMsg", "Usuário atualizado com sucesso!");
 				}
 			}
-			RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
+
 			request.setAttribute("usuarios", daoUser.listAll());
 			view.forward(request, response);
 		} catch (
 
 		SQLException e) {
-
 			e.printStackTrace();
 		}
 	}

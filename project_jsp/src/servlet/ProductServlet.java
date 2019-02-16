@@ -52,28 +52,54 @@ public class ProductServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			RequestDispatcher view = request.getRequestDispatcher("/cadastroProduto.jsp");
+			request.setAttribute("produtos", daoProduct.listAll());
+
 			String action = request.getParameter("acao") != null ? request.getParameter("acao") : "";
 			if (!action.equalsIgnoreCase("reset")) {
+				String errorMsg = null;
 				String id = request.getParameter("id");
 				String nome = request.getParameter("nome");
-				Double quantidade = Double.valueOf(request.getParameter("quantidade"));
-				Double valor = Double.valueOf(request.getParameter("valor"));
-				ProductBean product = new ProductBean(nome, quantidade, valor);
-				if (daoProduct.isNameValid(nome, id)) {
-					if (id == null || id.isEmpty()) {
-						daoProduct.save(product);
-						request.setAttribute("successMsg", "Produto cadastrado com sucesso!");
-					} else {
-						product.setId(Long.valueOf(id));
-						daoProduct.update(product);
-						request.setAttribute("successMsg", "Produto atualizado com sucesso!");
-					}
+				String quantidade = request.getParameter("quantidade");
+				String valor = request.getParameter("valor");
+				ProductBean product = new ProductBean(nome);
+				if (nome == null || nome.trim().isEmpty()) {
+					errorMsg = "Informar o nome do produto é obrigatório";
+				}
+				if (quantidade == null || quantidade.trim().isEmpty()) {
+					errorMsg = errorMsg == null ? "" : errorMsg + " <br/> ";
+					errorMsg += "Informar a quantidade do produto é obrigatório";
+
 				} else {
+					product.setQuantidade(Double.valueOf(quantidade));
+				}
+				if (valor == null || valor.trim().isEmpty()) {
+					errorMsg = errorMsg == null ? "" : errorMsg + " <br/> ";
+					errorMsg += "Informar o valor do produto é obrigatório";
+
+				} else {
+					product.setValor(Double.valueOf(valor));
+				}
+				boolean nameValid = daoProduct.isNameValid(nome, id);
+				if (!nameValid) {
+					errorMsg = "Já existe um produto com esse nome";
+				}
+				if (errorMsg != null || !nameValid) {
+					
+					request.setAttribute("errorMsg", errorMsg);
 					request.setAttribute("product", product);
-					request.setAttribute("errorMsg", "Nome já usado em outro produto");
+					view.forward(request, response);
+					return;
+				}
+				if (id == null || id.isEmpty()) {
+					daoProduct.save(product);
+					request.setAttribute("successMsg", "Produto cadastrado com sucesso!");
+				} else {
+					product.setId(Long.valueOf(id));
+					daoProduct.update(product);
+					request.setAttribute("successMsg", "Produto atualizado com sucesso!");
 				}
 			}
-			RequestDispatcher view = request.getRequestDispatcher("/cadastroProduto.jsp");
 			request.setAttribute("produtos", daoProduct.listAll());
 			view.forward(request, response);
 		} catch (

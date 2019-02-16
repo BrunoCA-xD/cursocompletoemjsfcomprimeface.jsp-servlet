@@ -363,7 +363,9 @@ textarea.input100 {
 .validate-input {
   position: relative;
 }
-
+.alert-validate{
+	border-color: red;
+}
 .alert-validate::before {
   content: attr(data-validate);
   display: -webkit-box;
@@ -411,7 +413,6 @@ textarea.input100 {
 }
 
 .true-validate::after {
-  content: "\f26b";
   font-family: Material-Design-Iconic-Font;
   font-size: 18px;
   color: #00ad5f;

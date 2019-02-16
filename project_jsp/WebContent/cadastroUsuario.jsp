@@ -21,7 +21,8 @@
 <body>
 
 	<!-- Position it -->
-	<div style="position: fixed; bottom: 5px; right: 0; z-index: 1293914812">
+	<div
+		style="position: fixed; bottom: 5px; right: 0; z-index: 1000000000">
 
 		<!-- Then put toasts within -->
 
@@ -48,26 +49,27 @@
 				class="contact100-form validate-form">
 				<span class="contact100-form-title">Usuário </span> <input
 					type="hidden" name="id" value="${user.id}" readonly="readonly" />
-				<div class="wrap-input100 validate-input bg1">
+				<div class="wrap-input100 bg1">
 					<label for="nome" class="label-input100">Nome: </label> <input
 						class="input100" type="text" id="nome" name="nome"
 						value="${user.nome}" placeholder="Please Type Your Name" />
 				</div>
-				<div class="wrap-input100 validate-input bg1">
+				<div class="wrap-input100 validate-input bg1"
+					data-validate="Enter Your Login">
 					<label for="login" class="label-input100">Login*: </label> <input
-						class="input100" type="text" id="login" name="login"
-						required="required" value="${user.login}"
-						placeholder="Please Type Your Login" />
+						class="input100 errorField" type="text" id="login" name="login"
+						value="${user.login}" placeholder="Please Type Your Login" />
 				</div>
-				<div class="wrap-input100 validate-input bg1">
-					<label class="label-input100" for="senha">Senha:</label> <input
+				<div class="wrap-input100 validate-input bg1"
+					data-validate="Enter Your password">
+					<label class="label-input100" for="senha">Senha*:</label> <input
 						class="input100" type="password" id="senha" name="senha"
 						value="${user.senha}" placeholder="Please Type Your password" />
 				</div>
-				<div class="wrap-input100 validate-input bg1">
+				<div class="wrap-input100 validate-input bg1"
+					data-validate="Enter Your phone number">
 					<label for="fone" class="label-input100">Fone*: </label> <input
-						class="input100" type="text" id="fone" name="fone"
-						required="required" value="${user.fone}"
+						class="input100" type="text" id="fone" name="fone"  value="${user.fone}"
 						placeholder="Please Type Your phone" />
 				</div>
 
@@ -135,9 +137,11 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+	<script type="text/javascript" src="resources/js/main.js"> </script>
 	<c:if test="${errorMsg !=null || successMsg !=null}">
 		<script type="text/javascript">
 			$('.toast').toast('show');
+						
 		</script>
 	</c:if>
 </body>

@@ -9,6 +9,7 @@
 <title>Cadastro de Produto</title>
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/util.css">
+
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
@@ -22,7 +23,7 @@
 
 	<!-- Position it -->
 	<div
-		style="position: fixed; bottom: 5px; right: 0; z-index: 1293914812">
+		style="position: fixed; bottom: 5px; right: 0; z-index: 1000000000">
 
 		<!-- Then put toasts within -->
 
@@ -49,22 +50,25 @@
 				class="contact100-form validate-form">
 				<span class="contact100-form-title">Produto </span> <input
 					type="hidden" name="id" value="${product.id}" readonly="readonly" />
-				<div class="wrap-input100 validate-input bg1">
+				<div class="wrap-input100 validate-input bg1"
+					data-validate="Enter the product's name">
 					<label for="nome" class="label-input100">Nome*: </label> <input
 						class="input100" type="text" id="nome" name="nome"
-						required="required" value="${product.nome}"
+						value="${product.nome}"
 						placeholder="Please Type the product's Name" />
 				</div>
-				<div class="wrap-input100 validate-input bg1">
-					<label for="login" class="label-input100">Quantidade*: </label> <input
-						class="input100" type="number" step="0.01" min="0" id="quantidade" name="quantidade"
-						required="required" value="${product.quantidade}"
+				<div class="wrap-input100 validate-input bg1"
+					data-validate="Enter the product's amount">
+					<label for="quantidade" class="label-input100">Quantidade*:
+					</label> <input class="input100" type="number" step="0.01" min="0"
+						id="quantidade" name="quantidade" value="${product.quantidade}"
 						placeholder="Please Type product amount" />
 				</div>
-				<div class="wrap-input100 validate-input bg1">
+				<div class="wrap-input100 validate-input bg1"
+					data-validate="Enter the product's price">
 					<label class="label-input100" for="valor">Valor* R$:</label> <input
-						class="input100" type="number" step="0.01" min="0" id="valor" name="valor"
-						required="required" value="${product.valor}"
+						class="input100" type="number" step="0.01" min="0" id="valor"
+						name="valor" value="${product.valor}"
 						placeholder="Please Type product price" />
 				</div>
 
@@ -132,6 +136,7 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+		<script type="text/javascript" src="resources/js/main.js"></script>
 	<c:if test="${errorMsg !=null || successMsg !=null}">
 		<script type="text/javascript">
 			$('.toast').toast('show');
