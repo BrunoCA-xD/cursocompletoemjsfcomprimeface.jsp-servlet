@@ -74,14 +74,14 @@
 
 				<div class="container-contact100-form-btn">
 					<div
-						<c:out value='${acao.equals("edit") ? "class=col-sm-6" :"class=col-sm-12" }'/>>
+						<c:out value='${product.id !=null  ? "class=col-sm-6" :"class=col-sm-12" }'/>>
 						<button class="contact100-form-btn" style="display: inline;">
 							<span> Salvar &nbsp;&nbsp;<i
 								class="fas fa-long-arrow-alt-right"></i>
 							</span>
 						</button>
 					</div>
-					<c:if test="${acao.equals('edit') }">
+					<c:if test="${product.id !=null }">
 						<div class="col-sm-6">
 							<button class="contact100-form-btn" style="display: inline;"
 								onclick="document.getElementById('frmProduct').action = 'saveProduct?acao=reset';">

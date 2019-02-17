@@ -85,8 +85,9 @@ public class ProductServlet extends HttpServlet {
 					errorMsg = "Já existe um produto com esse nome";
 				}
 				if (errorMsg != null || !nameValid) {
-					
+
 					request.setAttribute("errorMsg", errorMsg);
+					product.setId((id == null || id.isEmpty()) ? null : Long.parseLong(id));
 					request.setAttribute("product", product);
 					view.forward(request, response);
 					return;

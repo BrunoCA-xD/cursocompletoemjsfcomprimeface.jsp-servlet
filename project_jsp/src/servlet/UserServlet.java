@@ -80,8 +80,9 @@ public class UserServlet extends HttpServlet {
 						errorMsg = "Senha já usada em outro usuário";
 				}
 				if (!loginValid || !passwordValid) {
-					request.setAttribute("usuarios", daoUser.listAll());					
+					request.setAttribute("usuarios", daoUser.listAll());
 					request.setAttribute("errorMsg", errorMsg);
+					user.setId((id == null || id.isEmpty() ? null : Long.parseLong(id)));
 					request.setAttribute("user", user);
 					view.forward(request, response);
 					return;
@@ -91,7 +92,7 @@ public class UserServlet extends HttpServlet {
 					daoUser.save(user);
 					request.setAttribute("successMsg", "Usuário cadastrado com sucesso!");
 				} else {
-					user.setId(Long.valueOf(id));
+					user.setId(Long.parseLong(id));
 					daoUser.update(user);
 					request.setAttribute("successMsg", "Usuário atualizado com sucesso!");
 				}
