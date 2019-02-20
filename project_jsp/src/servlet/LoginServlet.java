@@ -30,10 +30,10 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
+		String password = request.getParameter("password");
 
 		try {
-			if (daoLogin.validateLogin(login, senha)) {// ok
+			if (daoLogin.validateLogin(login, password)) {// ok
 
 				RequestDispatcher dispatcher = request.getRequestDispatcher("acessoLiberado.jsp");
 				dispatcher.forward(request, response);

@@ -19,7 +19,8 @@
 	crossorigin="anonymous">
 </head>
 <body>
-
+	<a style="position: fixed; left: 0" href="acessoLiberado.jsp">Inicio</a>
+	<a style="position: fixed; right: 0" href="index.jsp">Sair</a>
 	<!-- Position it -->
 	<div
 		style="position: fixed; bottom: 5px; right: 0; z-index: 1000000000">
@@ -50,27 +51,68 @@
 				<span class="contact100-form-title">Usuário </span> <input
 					type="hidden" name="id" value="${user.id}" readonly="readonly" />
 				<div class="wrap-input100 bg1">
-					<label for="nome" class="label-input100">Nome: </label> <input
-						class="input100" type="text" id="nome" name="nome"
-						value="${user.nome}" placeholder="Please Type Your Name" />
+					<label for="name" class="label-input100">Nome: </label> <input
+						class="input100" type="text" id="name" name="name"
+						value="${user.name}" placeholder="Please Type Your Name" />
 				</div>
-				<div class="wrap-input100 validate-input bg1"
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100"
 					data-validate="Enter Your Login">
 					<label for="login" class="label-input100">Login*: </label> <input
 						class="input100 errorField" type="text" id="login" name="login"
 						value="${user.login}" placeholder="Please Type Your Login" />
 				</div>
-				<div class="wrap-input100 validate-input bg1"
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100"
 					data-validate="Enter Your password">
-					<label class="label-input100" for="senha">Senha*:</label> <input
-						class="input100" type="password" id="senha" name="senha"
-						value="${user.senha}" placeholder="Please Type Your password" />
+					<label class="label-input100" for="password">Senha*:</label> <input
+						class="input100" type="password" id="password" name="password"
+						value="${user.password}" placeholder="Please Type Your password" />
 				</div>
 				<div class="wrap-input100 validate-input bg1"
 					data-validate="Enter Your phone number">
-					<label for="fone" class="label-input100">Fone*: </label> <input
-						class="input100" type="text" id="fone" name="fone"  value="${user.fone}"
-						placeholder="Please Type Your phone" />
+					<label for="phone" class="label-input100">Fone*: </label> <input
+						class="input100" type="text" id="phone" name="phone"
+						value="${user.phone}" placeholder="Please Type Your phone number" />
+				</div>
+				<div class="wrap-input100 validate-input bg1"
+					data-validate="Enter Your Your ZIP Code">
+					<label for="zCode" class="label-input100">CEP: </label> <input
+						class="input100" type="text" id="zCode" name="zCode"
+						value="${user.zCode}" placeholder="Please Type Your ZIP" />
+				</div>
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<label for="street" class="label-input100">Rua: </label> <input
+						class="input100" type="text" id="street" name="street"
+						value="${user.street}" placeholder="Please Type "
+						readonly="readonly" />
+				</div>
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<label for="number" class="label-input100">Numero: </label> <input
+						class="input100" type="text" id="number" name="number"
+						value="${user.number}" placeholder="Please Type " />
+				</div>
+				<div class="wrap-input100  bg1 rs1-wrap-input100">
+					<label for="district" class="label-input100">Bairro: </label> <input
+						class="input100" type="text" id="district" name="district"
+						value="${user.district}" placeholder="Please Type "
+						readonly="readonly" />
+				</div>
+				<div class="wrap-input100  bg1 rs1-wrap-input100 ">
+					<label for="city" class="label-input100">Cidade: </label> <input
+						class="input100" type="text" id="city" name="city"
+						value="${user.city}" placeholder="Please Type "
+						readonly="readonly" />
+				</div>
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<label for="state" class="label-input100">Estado: </label> <input
+						class="input100" type="text" id="state" name="state"
+						value="${user.state}" placeholder="Please Type "
+						readonly="readonly" />
+				</div>
+				<div class="wrap-input100  bg1 rs1-wrap-input100">
+					<label for="bairro" class="label-input100">IBGE: </label> <input
+						class="input100" type="text" id="ibge" name="ibge"
+						value="${user.ibge}" placeholder="Please Type "
+						readonly="readonly" />
 				</div>
 
 				<div class="container-contact100-form-btn">
@@ -85,7 +127,7 @@
 					<c:if test="${user.id !=null }">
 						<div class="col-sm-6">
 							<button class="contact100-form-btn" style="display: inline;"
-								onclick="document.getElementById('frmUser').action = 'saveUser?acao=reset';">
+								onclick="document.getElementById('frmUser').action = 'saveUser?action=reset';">
 								<span> Cancelar </span>
 							</button>
 						</div>
@@ -105,18 +147,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${usuarios}" var="user">
+					<c:forEach items="${users}" var="user">
 
 						<tr>
 							<td width="2"><a
-								href="saveUser?acao=delete&usuario=${user.id}"><i
+								href="saveUser?action=delete&user=${user.id}"><i
 									class="far fa-trash-alt"></i></a></td>
-							<td width="2"><a
-								href="saveUser?acao=edit&usuario=${user.id}"><i
+							<td width="2"><a href="saveUser?action=edit&user=${user.id}"><i
 									class="far fa-edit"></i></a></td>
-							<td><c:out value="${user.nome}"></c:out></td>
+							<td><c:out value="${user.name}"></c:out></td>
 							<td><c:out value="${user.login}"></c:out></td>
-							<td><c:out value="${user.fone}"></c:out></td>
+							<td><c:out value="${user.phone}"></c:out></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -126,22 +167,71 @@
 
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-	<script type="text/javascript" src="resources/js/main.js"> </script>
+	<script type="text/javascript" src="resources/js/main.js"></script>
+	<script type="text/javascript">
+		function clearFields() {
+			$("#street").val("");
+			$("#district").val("");
+			$("#city").val("");
+			$("#state").val("");
+			$("#ibge").val("");
+		}
+		$("#zCode").blur(
+				function() {
+
+					//Nova variável "cep" somente com dígitos.
+					var zCode = $(this).val().replace(/\D/g, '');
+
+					//Expressão regular para validar o CEP.
+					var zCodeValidation = /^[0-9]{8}$/;
+
+					//Valida o formato do CEP.
+					if (zCodeValidation.test(zCode)) {
+
+						//Preenche os campos com "..." enquanto consulta webservice.
+						$("#street").val("...");
+						$("#district").val("...");
+						$("#city").val("...");
+						$("#state").val("...");
+						$("#ibge").val("...");
+
+						//Consulta o webservice viacep.com.br/
+						$.getJSON("https://viacep.com.br/ws/" + zCode
+								+ "/json/?callback=?", function(data) {
+
+							if (!("erro" in data)) {
+								//Atualiza os campos com os valores da consulta.
+								$("#street").val(data.logradouro);
+								$("#district").val(data.bairro);
+								$("#city").val(data.localidade);
+								$("#state").val(data.uf);
+								$("#ibge").val(data.ibge);
+							} //end if.
+							else {
+								clearFields();
+								//CEP pesquisado não foi encontrado.
+								alert("CEP não encontrado.");
+							}
+						});
+
+					} //end if.
+					else {
+						clearFields();
+						//cep é inválido.
+						alert("Formato de CEP inválido.");
+					}
+				});
+	</script>
+
 	<c:if test="${errorMsg !=null || successMsg !=null}">
 		<script type="text/javascript">
 			$('.toast').toast('show');
-						
 		</script>
 	</c:if>
 </body>

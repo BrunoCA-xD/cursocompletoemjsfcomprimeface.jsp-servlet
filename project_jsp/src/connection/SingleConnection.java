@@ -31,7 +31,7 @@ public class SingleConnection {
 			}
 
 		} catch (Exception e) {
-			throw new RuntimeException("Erro ao conectar com o banco de dados");
+			throw new RuntimeException("Erro ao conectar com o banco de dados",e);
 		}
 	}
 

@@ -3,26 +3,23 @@ package beans;
 public class ProductBean {
 
 	private Long id;
-	private String nome;
-	private Double quantidade;
-	private Double valor;
-
+	private String name;
+	private Double amount;
+	private Double value;
+	
 	public ProductBean() {
-		// TODO Auto-generated constructor stub
 	}
-
-	public ProductBean(Long id, String nome, Double quantidade, Double valor) {
+	
+	public ProductBean(String name) {
+		super();
+		this.name = name;
+	}
+	public ProductBean(Long id, String name, Double amount, Double value) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.quantidade = quantidade;
-		this.valor = valor;
-	}
-
-	public ProductBean(String nome) {
-		super();
-		this.nome = nome;
-
+		this.name = name;
+		this.amount = amount;
+		this.value = value;
 	}
 
 	public Long getId() {
@@ -33,28 +30,30 @@ public class ProductBean {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Double getQuantidade() {
-		return quantidade;
+	public Double getAmount() {
+		return amount;
 	}
 
-	public void setQuantidade(Double quantidade) {
-		this.quantidade = quantidade;
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
-	public Double getValor() {
-		return valor;
+	public Double getValue() {
+		return value;
 	}
 
-	public void setValor(Double valor) {
-		this.valor = valor;
+	public void setValue(Double value) {
+		this.value = value;
 	}
+
+	
 
 }

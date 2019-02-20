@@ -23,9 +23,9 @@ public class DAOProduct {
 		try {
 			String sql = "insert into produto values(null,?,?,?)";
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, product.getNome());
-			statement.setDouble(2, product.getQuantidade());
-			statement.setDouble(3, product.getValor());
+			statement.setString(1, product.getName());
+			statement.setDouble(2, product.getAmount());
+			statement.setDouble(3, product.getValue());
 			statement.execute();
 			conn.commit();
 
@@ -62,9 +62,9 @@ public class DAOProduct {
 			String sql = "update produto set nome=?, quantidade=?, valor=? where id =" + product.getId();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, product.getNome());
-			statement.setDouble(2, product.getQuantidade());
-			statement.setDouble(3, product.getValor());
+			statement.setString(1, product.getName());
+			statement.setDouble(2, product.getAmount());
+			statement.setDouble(3, product.getValue());
 			statement.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {

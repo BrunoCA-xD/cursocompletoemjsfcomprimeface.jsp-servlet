@@ -20,6 +20,8 @@
 	crossorigin="anonymous">
 </head>
 <body>
+	<a style="position: fixed; left: 0" href="acessoLiberado.jsp">Inicio</a>
+	<a style="position: fixed; right: 0" href="index.jsp">Sair</a>
 
 	<!-- Position it -->
 	<div
@@ -52,23 +54,23 @@
 					type="hidden" name="id" value="${product.id}" readonly="readonly" />
 				<div class="wrap-input100 validate-input bg1"
 					data-validate="Enter the product's name">
-					<label for="nome" class="label-input100">Nome*: </label> <input
-						class="input100" type="text" id="nome" name="nome"
-						value="${product.nome}"
+					<label for="name" class="label-input100">Nome*: </label> <input
+						class="input100" type="text" id="name" name="name"
+						value="${product.name}"
 						placeholder="Please Type the product's Name" />
 				</div>
 				<div class="wrap-input100 validate-input bg1"
 					data-validate="Enter the product's amount">
-					<label for="quantidade" class="label-input100">Quantidade*:
+					<label for="amount" class="label-input100">Quantidade*:
 					</label> <input class="input100" type="number" step="0.01" min="0"
-						id="quantidade" name="quantidade" value="${product.quantidade}"
+						id="amount" name="amount" value="${product.amount}"
 						placeholder="Please Type product amount" />
 				</div>
 				<div class="wrap-input100 validate-input bg1"
 					data-validate="Enter the product's price">
-					<label class="label-input100" for="valor">Valor* R$:</label> <input
-						class="input100" type="number" step="0.01" min="0" id="valor"
-						name="valor" value="${product.valor}"
+					<label class="label-input100" for="value">Valor* R$:</label> <input
+						class="input100" type="number" step="0.01" min="0" id="value"
+						name="value" value="${product.value}"
 						placeholder="Please Type product price" />
 				</div>
 
@@ -84,7 +86,7 @@
 					<c:if test="${product.id !=null }">
 						<div class="col-sm-6">
 							<button class="contact100-form-btn" style="display: inline;"
-								onclick="document.getElementById('frmProduct').action = 'saveProduct?acao=reset';">
+								onclick="document.getElementById('frmProduct').action = 'saveProduct?action=reset';">
 								<span> Cancelar </span>
 							</button>
 						</div>
@@ -104,18 +106,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${produtos}" var="product">
+					<c:forEach items="${products}" var="product">
 
 						<tr>
 							<td width="2"><a
-								href="saveProduct?acao=delete&produto=${product.id}"><i
+								href="saveProduct?action=delete&product=${product.id}"><i
 									class="far fa-trash-alt"></i></a></td>
 							<td width="2"><a
-								href="saveProduct?acao=edit&produto=${product.id}"><i
+								href="saveProduct?action=edit&product=${product.id}"><i
 									class="far fa-edit"></i></a></td>
-							<td><c:out value="${product.nome}"></c:out></td>
-							<td><c:out value="${product.quantidade}"></c:out></td>
-							<td><c:out value="${product.valor}"></c:out></td>
+							<td><c:out value="${product.name}"></c:out></td>
+							<td><c:out value="${product.amount}"></c:out></td>
+							<td><c:out value="${product.value}"></c:out></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -136,7 +138,7 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-		<script type="text/javascript" src="resources/js/main.js"></script>
+	<script type="text/javascript" src="resources/js/main.js"></script>
 	<c:if test="${errorMsg !=null || successMsg !=null}">
 		<script type="text/javascript">
 			$('.toast').toast('show');

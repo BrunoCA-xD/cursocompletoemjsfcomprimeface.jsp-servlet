@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.DAOProduct;
-import DAO.DAOUser;
 import beans.ProductBean;
-import beans.UserBean;
 
 @WebServlet("/saveProduct")
 public class ProductServlet extends HttpServlet {
@@ -28,8 +26,8 @@ public class ProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String action = request.getParameter("acao") != null ? request.getParameter("acao") : "";
-			String product = request.getParameter("produto");
+			String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+			String product = request.getParameter("product");
 
 			if (action.equals("delete")) {
 				daoProduct.delete(product);
@@ -39,8 +37,8 @@ public class ProductServlet extends HttpServlet {
 				request.setAttribute("product", productBean);
 			}
 			RequestDispatcher view = request.getRequestDispatcher("/cadastroProduto.jsp");
-			request.setAttribute("produtos", daoProduct.listAll());
-			request.setAttribute("acao", action);
+			request.setAttribute("products", daoProduct.listAll());
+			request.setAttribute("action", action);
 			view.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,38 +51,38 @@ public class ProductServlet extends HttpServlet {
 
 		try {
 			RequestDispatcher view = request.getRequestDispatcher("/cadastroProduto.jsp");
-			request.setAttribute("produtos", daoProduct.listAll());
+			request.setAttribute("products", daoProduct.listAll());
 
-			String action = request.getParameter("acao") != null ? request.getParameter("acao") : "";
+			String action = request.getParameter("action") != null ? request.getParameter("action") : "";
 			if (!action.equalsIgnoreCase("reset")) {
 				String errorMsg = null;
 				String id = request.getParameter("id");
-				String nome = request.getParameter("nome");
-				String quantidade = request.getParameter("quantidade");
-				String valor = request.getParameter("valor");
-				ProductBean product = new ProductBean(nome);
-				if (nome == null || nome.trim().isEmpty()) {
+				String name = request.getParameter("name");
+				String amount = request.getParameter("amount");
+				String value = request.getParameter("value");
+				ProductBean product = new ProductBean(name);
+				if (name == null || name.trim().isEmpty()) {
 					errorMsg = "Informar o nome do produto é obrigatório";
 				}
-				if (quantidade == null || quantidade.trim().isEmpty()) {
+				if (amount == null || amount.trim().isEmpty()) {
 					errorMsg = errorMsg == null ? "" : errorMsg + " <br/> ";
 					errorMsg += "Informar a quantidade do produto é obrigatório";
 
 				} else {
-					product.setQuantidade(Double.valueOf(quantidade));
+					product.setAmount(Double.valueOf(amount));
 				}
-				if (valor == null || valor.trim().isEmpty()) {
+				if (value == null || value.trim().isEmpty()) {
 					errorMsg = errorMsg == null ? "" : errorMsg + " <br/> ";
 					errorMsg += "Informar o valor do produto é obrigatório";
 
 				} else {
-					product.setValor(Double.valueOf(valor));
+					product.setValue(Double.valueOf(value));
 				}
-				boolean nameValid = daoProduct.isNameValid(nome, id);
-				if (!nameValid) {
+				boolean isNameValid = daoProduct.isNameValid(name, id);
+				if (!isNameValid) {
 					errorMsg = "Já existe um produto com esse nome";
 				}
-				if (errorMsg != null || !nameValid) {
+				if (errorMsg != null || !isNameValid) {
 
 					request.setAttribute("errorMsg", errorMsg);
 					product.setId((id == null || id.isEmpty()) ? null : Long.parseLong(id));
@@ -101,7 +99,7 @@ public class ProductServlet extends HttpServlet {
 					request.setAttribute("successMsg", "Produto atualizado com sucesso!");
 				}
 			}
-			request.setAttribute("produtos", daoProduct.listAll());
+			request.setAttribute("products", daoProduct.listAll());
 			view.forward(request, response);
 		} catch (
 
