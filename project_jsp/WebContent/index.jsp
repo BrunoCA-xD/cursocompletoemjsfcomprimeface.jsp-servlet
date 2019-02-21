@@ -8,14 +8,14 @@
 <head>
 <meta charset="UTF-8">
 
-<title>Insert title here</title>
+<title>Curso_jsp Login</title>
 <link rel="stylesheet" href="resources/css/Style.css">
 
 </head>
 <body>
 	<div class="login-page">
 		<div class="form">
-			<form class="login-form" action="LoginServlet" method="post">
+			<form class="login-form" action="pages/LoginServlet" method="post">
 				Login: <input type="text" name="login" /> <br /> Senha: <input
 					type="password" name="password" /> <br />
 				<button type="submit">Logar</button>

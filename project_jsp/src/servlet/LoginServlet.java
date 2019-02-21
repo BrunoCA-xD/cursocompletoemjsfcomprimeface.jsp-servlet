@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.DAOLogin;
 import beans.UserBean;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/pages/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -24,6 +24,17 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		try {
+			String action = request.getParameter("action");
+			if (action.equalsIgnoreCase("logout")) {
+				request.getSession().invalidate();
+			}
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", request.getContextPath() + "/index.jsp");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -32,18 +43,30 @@ public class LoginServlet extends HttpServlet {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 
-		try {
-			if (daoLogin.validateLogin(login, password)) {// ok
-
-				RequestDispatcher dispatcher = request.getRequestDispatcher("acessoLiberado.jsp");
-				dispatcher.forward(request, response);
-			} else {// acesso negado
-				RequestDispatcher dispatcher = request.getRequestDispatcher("acessoNegado.jsp");
-				dispatcher.forward(request, response);
+		if (login != null && !login.isEmpty() && password != null && !password.isEmpty()) {
+			try {
+				Integer user_id = daoLogin.validateLogin(login, password);
+				if (user_id != null) {// ok
+					request.getSession().setAttribute("user", user_id);
+					response.setStatus(response.SC_MOVED_TEMPORARILY);
+					String url = "/pages/acessoLiberado.jsp";
+					if(request.getSession().getAttribute("requestedUrl") !=null) {
+						url = request.getSession().getAttribute("requestedUrl").toString();
+					}
+					response.setHeader("Location", request.getContextPath()
+							+ url);
+				} else {// acesso negado
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/acessoNegado.jsp");
+					dispatcher.forward(request, response);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} else {
+
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", request.getContextPath() + "/index.jsp");
 		}
 	}
 

@@ -2,13 +2,14 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Cadastro de Produto</title>
-<link rel="stylesheet" href="resources/css/main.css">
-<link rel="stylesheet" href="resources/css/util.css">
+<link rel="stylesheet" href="../resources/css/main.css">
+<link rel="stylesheet" href="../resources/css/util.css">
 
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
@@ -18,10 +19,14 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+	type="text/javascript"></script>
+<script src="../resources/js/jquery.maskMoney.js" type="text/javascript"></script>
 </head>
 <body>
 	<a style="position: fixed; left: 0" href="acessoLiberado.jsp">Inicio</a>
-	<a style="position: fixed; right: 0" href="index.jsp">Sair</a>
+	<a style="position: fixed; right: 0" href="LoginServlet?action=logout">Sair</a>
 
 	<!-- Position it -->
 	<div
@@ -61,17 +66,15 @@
 				</div>
 				<div class="wrap-input100 validate-input bg1"
 					data-validate="Enter the product's amount">
-					<label for="amount" class="label-input100">Quantidade*:
-					</label> <input class="input100" type="number" step="0.01" min="0"
-						id="amount" name="amount" value="${product.amount}"
-						placeholder="Please Type product amount" />
+					<label for="amount" class="label-input100">Quantidade*: </label> <input
+						class="input100 js-amount" type="text" id="amount" name="amount"
+						value="${product.amountMasked}" placeholder="Please Type product amount" />
 				</div>
 				<div class="wrap-input100 validate-input bg1"
 					data-validate="Enter the product's price">
 					<label class="label-input100" for="value">Valor* R$:</label> <input
-						class="input100" type="number" step="0.01" min="0" id="value"
-						name="value" value="${product.value}"
-						placeholder="Please Type product price" />
+						class="input100 js-currency" type="text" id="value" name="value"
+						value="${product.valueMasked}" placeholder="Please Type product price" />
 				</div>
 
 				<div class="container-contact100-form-btn">
@@ -115,9 +118,9 @@
 							<td width="2"><a
 								href="saveProduct?action=edit&product=${product.id}"><i
 									class="far fa-edit"></i></a></td>
-							<td><c:out value="${product.name}"></c:out></td>
-							<td><c:out value="${product.amount}"></c:out></td>
-							<td><c:out value="${product.value}"></c:out></td>
+							<td> <c:out value="${product.name}"></c:out></td>
+							<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${product.amount}" /></td>
+							<td><fmt:formatNumber type="currency" maxFractionDigits="2" value="${product.value}" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -127,9 +130,6 @@
 
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -138,11 +138,27 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-	<script type="text/javascript" src="resources/js/main.js"></script>
+	<script type="text/javascript" src="../resources/js/main.js"></script>
 	<c:if test="${errorMsg !=null || successMsg !=null}">
 		<script type="text/javascript">
 			$('.toast').toast('show');
 		</script>
 	</c:if>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.js-currency').maskMoney({
+				prefix : 'R$ ',
+				allowNegative : false,
+				thousands : '.',
+				decimal : ',',
+				affixesStay : false
+			});
+			$('.js-amount').maskMoney({
+				allowNegative : false,
+				thousands : '.',
+				decimal : ','
+			});
+		});
+	</script>
 </body>
 </html>

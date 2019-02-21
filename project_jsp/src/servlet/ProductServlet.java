@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.DAOProduct;
 import beans.ProductBean;
 
-@WebServlet("/saveProduct")
+@WebServlet("/pages/saveProduct")
 public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class ProductServlet extends HttpServlet {
 				ProductBean productBean = daoProduct.findById(product);
 				request.setAttribute("product", productBean);
 			}
-			RequestDispatcher view = request.getRequestDispatcher("/cadastroProduto.jsp");
+			RequestDispatcher view = request.getRequestDispatcher("/pages/cadastroProduto.jsp");
 			request.setAttribute("products", daoProduct.listAll());
 			request.setAttribute("action", action);
 			view.forward(request, response);
@@ -50,7 +50,7 @@ public class ProductServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			RequestDispatcher view = request.getRequestDispatcher("/cadastroProduto.jsp");
+			RequestDispatcher view = request.getRequestDispatcher("/pages/cadastroProduto.jsp");
 			request.setAttribute("products", daoProduct.listAll());
 
 			String action = request.getParameter("action") != null ? request.getParameter("action") : "";
@@ -69,14 +69,14 @@ public class ProductServlet extends HttpServlet {
 					errorMsg += "Informar a quantidade do produto é obrigatório";
 
 				} else {
-					product.setAmount(Double.valueOf(amount));
+					product.setAmount(Double.valueOf(amount.replace(".", "").replace(",", ".")));
 				}
 				if (value == null || value.trim().isEmpty()) {
 					errorMsg = errorMsg == null ? "" : errorMsg + " <br/> ";
 					errorMsg += "Informar o valor do produto é obrigatório";
 
 				} else {
-					product.setValue(Double.valueOf(value));
+					product.setValue(Double.valueOf(value.replace(".", "").replace(",", ".")));
 				}
 				boolean isNameValid = daoProduct.isNameValid(name, id);
 				if (!isNameValid) {

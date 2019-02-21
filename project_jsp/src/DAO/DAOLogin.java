@@ -14,12 +14,13 @@ public class DAOLogin {
 		conn = SingleConnection.getConnection();
 	}
 
-	public boolean validateLogin(String login, String password) throws Exception {
+	public Integer validateLogin(String login, String password) throws Exception {
 
 		String sql = "select id from usuario where login='" + login + "' and senha='" + password + "'";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		ResultSet resultSet = statement.executeQuery();
-
-		return resultSet.next();		
+		if(resultSet.next())
+			return resultSet.getInt("id");
+		return null;		
 	}
 }

@@ -39,4 +39,10 @@ public class Filter implements javax.servlet.Filter {
 		connection = SingleConnection.getConnection();
 	}
 
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

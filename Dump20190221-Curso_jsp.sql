@@ -18,6 +18,40 @@ USE `curso_jsp`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `product`
+--
+
+DROP TABLE IF EXISTS `product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) DEFAULT NULL,
+  `quantidade` decimal(10,2) DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nome` (`nome`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `telefone`
+--
+
+DROP TABLE IF EXISTS `telefone`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `telefone` (
+  `usuario` int(11) unsigned NOT NULL,
+  `numero` varchar(20) NOT NULL,
+  `tipo` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`usuario`,`numero`),
+  UNIQUE KEY `numero` (`numero`),
+  CONSTRAINT `fk_usuario_telefone` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -29,10 +63,17 @@ CREATE TABLE `usuario` (
   `login` varchar(255) DEFAULT NULL,
   `senha` varchar(255) DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
+  `cep` varchar(10) DEFAULT NULL,
+  `rua` varchar(255) DEFAULT NULL,
+  `num` varchar(10) DEFAULT NULL,
+  `bairro` varchar(100) DEFAULT NULL,
+  `cidade` varchar(100) DEFAULT NULL,
+  `uf` varchar(2) DEFAULT NULL,
+  `ibge` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -44,6 +85,6 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-15 11:42:01
+-- Dump completed on 2019-02-21 19:06:30
 
-insert into usuario values(null,'admin','admin','adm');
+insert into usuario(nome,login,senha) values('adm','admin','admin');

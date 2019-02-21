@@ -6,14 +6,15 @@ public class ProductBean {
 	private String name;
 	private Double amount;
 	private Double value;
-	
+
 	public ProductBean() {
 	}
-	
+
 	public ProductBean(String name) {
 		super();
 		this.name = name;
 	}
+
 	public ProductBean(Long id, String name, Double amount, Double value) {
 		super();
 		this.id = id;
@@ -46,6 +47,10 @@ public class ProductBean {
 		this.amount = amount;
 	}
 
+	public String getAmountMasked() {
+		return amount.toString().replace(".", ",");
+	}
+
 	public Double getValue() {
 		return value;
 	}
@@ -54,6 +59,8 @@ public class ProductBean {
 		this.value = value;
 	}
 
-	
+	public String getValueMasked() {
+		return value.toString().replace(".", ",");
+	}
 
 }
